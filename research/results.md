@@ -178,7 +178,22 @@ The subsequent development-only protocol froze exactly the three approved JPEG h
 | 032 / monotone control | 0.713437 | 0.716080 | 0.850276 |
 | 037 / eye-positive chimera | 0.734254 | 0.398249 | 0.504418 |
 
-The 032 chimera improved ArcFace worst cosine by **0.355779** over its matched approved control, exceeding the gate's 0.05 margin component, but ArcFace and SFace still matched both chimeras under every condition. Neither chimera met the required all-seven nonmatch on all three models. **Retire this fixed setting without expansion.** ArcFace was already development-influenced; no reserved final recognizer was touched and no privacy or release claim follows. An SFace calibration-registry metadata mismatch was resolved with an exact historical-registry/full-development-subtree provenance addendum after scoring, before score values were inspected; the executed wrapper is preserved. The current SFace wrapper requires an explicit exact calibrated registry for future runs and has passed preflight only. See the [full provenance account](contrast-chimera.md).
+The 032 chimera improved ArcFace worst cosine by **0.355779** over its matched approved control, exceeding the gate's 0.05 margin component, but ArcFace and SFace still matched both chimeras under every condition. Neither chimera met the required all-seven nonmatch on all three models. **Retire this fixed setting without expansion.** ArcFace was already development-influenced; no reserved final recognizer was touched and no privacy or release claim follows. An SFace calibration-registry metadata mismatch was resolved with an exact historical-registry/full-development-subtree provenance addendum after scoring, before score values were inspected; the executed wrapper is preserved. The current SFace wrapper requires an explicit exact calibrated registry; it passed H12 preflight after scoring but did not generate H12's results. See the [full provenance account](contrast-chimera.md).
+
+## Chimera substrate versus stacked dots
+
+H13 tested whether optimizing dots while the H12 graphic chimera is present transfers better than optimizing the same feasible dots on the original photograph and then stacking them onto the chimera. Both arms used the literal H5 14×14 radius-0.3 dots intersected with H12's hard treatment support, the same 588 seed-0 RGB coefficients, channel cap 64, and per-channel headroom valid on **both** substrates. The original eye band and outside-support pixels stayed unchanged before JPEG. A shared bounded pre-JPEG face-RMS projector ran during search; a single score-blind exact-JPEG scalar correction of the frozen step-18 coefficients matched the exported target. Both final images were chimera plus the learned field. Each arm made 18 forward/gradient steps, **17 effective Adam updates**, 144 edited model-condition gradient forwards and **zero native checkpoint queries**. All four JPEGs froze before other same-person views were read. The [H13 protocol and evidence note](chimera-dots.md) records formulas, controls, hashes, runtimes and rerun commands.
+
+Root's preliminary full-photo/crop screen found all four edits overtly artificial with plausible same-person structure; that is not independent human acceptance. All 12 arm/model clean controls were eligible. Across 84 edited model-condition evaluations, **40 were valid and 44 were inconclusive no-face detections**, never counted as protection. All **28 ArcFace queries were valid and matched**. Worst valid-condition own-gallery cosine is shown below; `—` means no valid recognition result. SFace and GhostFaceNet each had only six valid conditions, all for 037 joint; its seventh crop90 was inconclusive.
+
+| Identity / arm | SFace (valid/NM) | GhostFaceNet (valid/NM) | ArcFace (valid/NM) |
+| --- | ---: | ---: | ---: |
+| 032 / stack | — (0/0) | — (0/0) | 0.552359 (7/0) |
+| 032 / joint | — (0/0) | — (0/0) | 0.490889 (7/0) |
+| 037 / stack | — (0/0) | — (0/0) | 0.526907 (7/0) |
+| 037 / joint | 0.640661 (6/0) | 0.354227 (6/2) | 0.583239 (7/0) |
+
+For 032, joint lowered ArcFace worst cosine by **0.061469** versus stack, but only **0.003608** versus the unchanged H12 base, below the predeclared 0.05 reduction against both controls. For 037, joint worsened versus stack by 0.056332 and H12 by 0.078821. The all-seven-valid and joint native-model nonmatch gates also failed. **Retire this fixed H13 setting without expansion.** The maximum paired same-condition processed face-RMS difference was 0.02922/0.04834 for 032/037, below the 0.25 imbalance flag. Each search took 31.08–33.85 seconds excluding model loading; this is not a browser benchmark. ArcFace was already development-influenced, and no reserved final recognizer or independent human identity test was used. No novelty, privacy or release claim follows.
 
 ## Released line-drawing model
 
@@ -218,5 +233,8 @@ Runners, selection rules and model hashes are in this repository. Local run dire
 | Contrast chimera SFace / GhostFaceNet / ArcFace scores | `f20748e849853375749d7adf1d63e7ba0dfaa73b437a0305d55549e264edb7c5` / `b734779e299da0b586c1ea0c245aa6242d9488232ca91eb4c42288347fb7b366` / `3dae8e2cc7701820fd1849b36c49b1fd928a71edd4872b7777435e330669732e` |
 | OpenVINO 0095 calibration | `f33a0e6fa03a4853013eea9fdda9c6c2d0c008a2f6655fd52064bb0187d1275a` |
 | Frozen H7 dots / OpenVINO 0095 | `f68c320e51b1ceb5cc49a21867e60b3b706052e7bbb155397b1dc46b5dbaa60b` |
+| Chimera dots executed source / optimization protocol / four-export freeze | `05d33fbbb90e2c499b83903753d4209bda29c6f0f2bd1aef15c481b2b27e881a` / `64682c04e154536d908cab051699dfa947deadab9036369ec7d34bd48f1b14da` / `95e4b04bfecf38d4d7c43f20d42ce5b9129d062f4ed4591b5989c40dc0aab0b7` |
+| Chimera dots frozen-input manifest / pre-score protocol / disposition | `9f384685223c4e8ef27cbac995446c756aaa7886fbe46ab8c3d9da3aedbed363` / `11ac02989fabe54774f63ff5f45f8779f3748cd276971ab248017a67dbe4c91d` / `091e31a7b5167362bedcfbd39b2e86ff2dcbe6ee9c060790d8d7d40a59626956` |
+| Chimera dots SFace / GhostFaceNet / ArcFace score JSON | `0c90e619efe1387021a0a1c13bed843ec80a832186681b34df7f60dfca1bb58b` / `b1009027784ca49915ba837e148c2585f5ee174accb895240cb8d32b7b0692ae` / `5096e90727b5602116ea913897f45e52d0d9bd7d52c4173f77f108a404fd2f5b` |
 
 The detailed reports contain local biometric artifacts and are not distributed. The aggregate findings above are the public record; no release success rate is claimed.

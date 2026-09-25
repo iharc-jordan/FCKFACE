@@ -14,6 +14,10 @@ The [completed findings](results.md) include negative cross-model transfer and r
 
 A fourth [OpenVINO 0095 development pipeline](openvino-development.md) uses Intel's pinned FP32 artifact and demo preprocessing with the declared YuNet substitution. Its separate calibration and four-export H7 diagnostic are complete; only one of two people passed all seven conditions. Its isolated environment uses OpenVINO 2025.4.1, OpenCV 4.13.0, NumPy 2.3.5 and Pillow. The model metadata grants Apache-2.0 for the artifacts, but browser conversion and a deployable method remain unverified. See [research attribution](NOTICE).
 
+The compact model's [ONNX conversion and native gradient checks](openvino-onnx-conversion.md) passed on three synthetic inputs and two previously reviewed aligned face crops. These component checks do not establish browser performance or an effective editing method. The [chimera-aware dot comparison](chimera-dots.md) failed its recognition gate despite matched distortion and preliminary appearance acceptance; its detector failures remain inconclusive.
+
+The subsequent [TensorFlow conversion](browser/openvino_tfjs_conversion.md) passed forward checks but missed the predeclared gradient tolerance on one synthetic case. That failure and its bounded numerical diagnosis are preserved; no browser adoption followed.
+
 Acquire the consented [Face Research Lab London Set, version 5](https://doi.org/10.6084/m9.figshare.5047666.v5):
 
 ```powershell
