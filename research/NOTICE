@@ -22,3 +22,39 @@ FCKFACE's adaptation is a separate NumPy/OpenCV parity implementation.
 The unmodified official demo and model files are external inputs and are
 not distributed in this repository. The repository root LICENSE contains
 the Apache-2.0 license text.
+
+The five-point ArcFace template and similarity-crop preprocessing in
+research/h15_arcface_alignment.py adapt InsightFace's face_align.py and
+ArcFaceONNX.get_feat at revision 1480e705287bc5d59f923b46c260ec6e3e4150f6:
+https://github.com/deepinsight/insightface/tree/1480e705287bc5d59f923b46c260ec6e3e4150f6/python-package/insightface
+The upstream project attributes ArcFaceONNX to Jia Guo and declares its
+source code under the MIT License. The official source and pretrained weights
+are not included in this repository; the pretrained weights have separate
+non-commercial research terms.
+
+Upstream source attribution retained from arcface_onnx.py:
+@Organization: insightface.ai
+@Author: Jia Guo
+@Time: 2021-05-04
+The pinned repository README declares MIT for its source code:
+https://github.com/deepinsight/insightface/blob/1480e705287bc5d59f923b46c260ec6e3e4150f6/README.md#license
+
+MIT License permission and disclaimer (https://opensource.org/license/mit):
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.

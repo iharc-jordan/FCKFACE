@@ -212,6 +212,12 @@ All four calibrated development models had valid clean references and matched cl
 
 Predeclared ArcFace worst-cosine reductions of at least +0.05 on **both** identities failed: B−A was +0.009090/−0.074695 for 001/003, and C−B was −0.050539/−0.084163. No arm passed all seven SFace, GhostFaceNet and 0095 conditions on both identities. The largest paired processed face-RMS gap was 0.169897, under the 0.25 balance gate. The six native searches took 137.13 seconds excluding model loading, not a browser benchmark. **Retire this fixed H14 setting without expansion.** ArcFace and 0095 are development models; the four reserved final recognizers were untouched. No privacy, independent transfer or release claim follows.
 
+## H15: including ArcFace in the gradient basis
+
+The [SFace–ArcFace comparison](arcface-basis.md) used the same two development people, source-only references, dot carrier, distortion limits and 18-forward/17-update budget as H14. Both exact exported JPEGs passed preliminary root appearance screening, then all **56/56** edited model-condition evaluations were valid. SFace did not match either person in any of the seven conditions, but ArcFace matched both in **all seven**. The worst ArcFace gallery cosines were 0.419155 and 0.440566, above its frozen 0.237600 threshold. GhostFaceNet and 0095 also matched the second person throughout.
+
+Adding ArcFace gradients reduced its scores relative to H14's balanced SFace/GhostFaceNet arm, but did not meet the predeclared nonmatch criterion. The maximum processed face-RMS difference from the matched H14 controls was 0.060, below 0.25. **Retire this fixed setting.** This conventional baseline is neither a novel transfer result nor release evidence. The linked note includes every model's results, controls, runtime and source/protocol fingerprints.
+
 ## Released line-drawing model
 
 As a prior-art comparison, the authors' [Informative Drawings](https://github.com/carolineec/informative-drawings) generator processed a 512-pixel crop with facial context, then composited its grayscale output inside the selected face. Two released styles on the four preselected people produced eight fixed JPEGs. Root review found more individual structure than the handmade stencils, especially in the lighter style, and allowed a bounded recognition check. This is not independent human acceptance or a new FCKFACE invention.
@@ -256,5 +262,7 @@ Runners, selection rules and model hashes are in this repository. Local run dire
 | H14 optimizer / 0095 alignment helper | `246a54398ec4449c52b4a18a773f7e5549c0565db0e96ae01aee839f94728ebe` / `bb3e9ac953f2b2e880d6ed47dd70d35147c41be4fcec704e0fef4241ff17a3ca` |
 | H14 six-JPEG freeze / pre-score protocol / aggregate disposition | `512f8eb8976b3859b0eb236d36f10b17c092c3c76399e573b21edb3d9bf15773` / `2b0de2536888b1c930c1f8e1bbd038c891837148d972781cbb404deb5152eb5b` / `6b582c28149e8bdd2bece1a13e3461bc1488d5c0ec1114a2bac5d56edebc27ea` |
 | H14 SFace / GhostFaceNet / ArcFace / OpenVINO 0095 score JSON | `22374bf3ea6876ab839272da9cbbbed0b1a4a713e98fbf3d9804f8accd7a0fb5` / `c0426bd7292786418527a581f5c09d9c4ae49f660531ca6924d8116275fdc697` / `a90dddd533f5a240e8d705d6af2d48d7d124ccb64ba67bc70c4053c1d9e752ae` / `8015a7480862ef4a4a92423d2484da6436bbb497425813af5f81ade881d86d2c` |
+
+H15's frozen scoring protocol is `e05299268c75e95850e34c9920ecf88707e337776e34b27c3b2816124b54cc8a`; its checked aggregate is `580771938a936e693fcf5879ebcc799c530b638c2dca48be8b437e79023c8a92`. Full per-artifact fingerprints are in [the H15 note](arcface-basis.md).
 
 The detailed reports contain local biometric artifacts and are not distributed. The aggregate findings above are the public record; no release success rate is claimed.
