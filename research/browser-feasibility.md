@@ -1,6 +1,6 @@
 # Browser model feasibility — 2026-09-25
 
-**Current evidence:** Exact OpenCV Zoo SFace ONNX runs in ONNX Runtime Web WASM and closely matches native OpenCV features on two development crops. Standard TensorFlow.js conversions of SFace and the exact-architecture GhostFaceNet float32 clone also passed synthetic output and input-gradient diagnostics in desktop Chrome. Their complete photo optimization, combined memory use and actual phone performance remain unverified. No research method has passed the protection requirements, so the public processor remains unavailable.
+**Current evidence:** Exact OpenCV Zoo SFace ONNX runs in ONNX Runtime Web WASM and closely matches native OpenCV features on two development crops. Standard TensorFlow.js conversions of SFace and the exact-architecture GhostFaceNet float32 clone passed synthetic and combined actual-development-crop output/input-gradient checks in desktop Chrome. The combined crop worker measured its own tensor memory; complete photo optimization, peak browser-process memory and actual phone performance remain unverified. No research method has passed the protection requirements, so the public processor remains unavailable.
 
 ## Exact SFace forward inference route
 
@@ -82,6 +82,10 @@ The [standard SFace conversion and probe](browser/sface_tfjs_conversion.md) used
 Desktop Chrome CPU and WebGL passed all five predeclared numerical checks, including three coordinate finite differences. Raw maximum errors versus native OpenCV were 2.03×10⁻⁶ and 5.07×10⁻⁶; input-gradient cosines exceeded 0.99999997. CPU forward/gradient took about 5.88/58.22 seconds during concurrent native research. WebGL's first forward/gradient took 3.29/8.64 seconds. In a subsequent worker, three warm forwards took 42.1–42.8 ms and gradients 155.7–158.9 ms, with unchanged numerical results.
 
 After model/input/target disposal, both backends reported zero tensors and occupied bytes. WebGL retained about 560 MB of free allocated texture cache. These counters exclude browser process memory and do not establish a peak or combined two-model memory bound. Root cancelled an active CPU gradient, restarted a fresh WebGL worker, observed a full numerical pass and stopped it. The numerical observations are transcribed from the rendered probe report and kept outside Git. No complete photo optimizer or actual iPhone/Android test has passed yet.
+
+## Combined two-model actual-crop browser check
+
+The [frozen development-crop component probe](browser/combined_crop_parity.md) loaded both converted models in one Chrome WebGL worker and passed all four predeclared forward and input-gradient checks on native-aligned crops from `frll-024` and `frll-036`. Browser PNG, decoded-pixel and input-tensor hashes matched the frozen native references. SFace raw errors were at most `1.69e-5`, Ghost clone raw errors at most `6.86e-6`; every gradient cosine exceeded `0.9999999999994`. First-case SFace/Ghost gradients took `5.68/21.33 s`; second-case gradients `157/172 ms`. The two-model worker held 588 tensors / 54.9 MB of tensor bytes, disposed to zero occupied bytes, and retained 853.9 MB of free allocated GPU texture cache. These are root-transcribed displayed Chrome results; model shard hashes are local-server reports, not independently verified browser downloads. Total browser-process RAM and a full-photo 90-second workflow remain unmeasured. Private fixtures, references, hashes and transcribed observations remain outside Git.
 
 ## Size, rights and integration boundary
 

@@ -136,6 +136,19 @@ Both clean identities were eligible on all three development models. ArcFace det
 
 Exported face RMS was 16.036–16.073, with within-person arm spread at most 0.030. The six native optimizations took 328.4 seconds after anchor construction, 49.2–59.6 seconds per arm. Root reviewed all full photos and face crops and found plausible likeness with artificial dots; independent human appearance acceptance remains untested. The four reserved final models remain untouched.
 
+## Momentum and input-diversity dot optimization
+
+H10 compared Adam, momentum sign descent, and momentum plus random resize/pad of the **edited aligned crop**. All arms used the same untransformed native clean source embedding, fixed H7 dots (RMS 16, cap 64), seed 0, 18 steps, four gradient conditions, 144 edited model-condition forwards and 48 native diagnostic queries per arm. The forward step-18 JPEG was frozen unconditionally for each of two development people before opening their separate gallery views. The [protocol and reproducibility note](transfer-dots.md) records the exact schedule, implementation, hashes and prior art. Momentum and input diversity are established transfer-attack components, not FCKFACE inventions.
+
+| Identity | Adam ArcFace worst gallery cosine | Momentum | Momentum + input diversity |
+| --- | ---: | ---: | ---: |
+| 029 | **0.448252** | 0.502479 | 0.507174 |
+| 030 | **0.588494** | 0.605418 | 0.612109 |
+
+Both clean people were eligible on SFace, GhostFaceNet and ArcFace. All 126 edited seven-condition model evaluations were valid; **ArcFace still matched all 42 candidate conditions** against four own-gallery views (threshold 0.2376004863). Against Adam and momentum respectively, the median ArcFace worst-gallery cosine *reduction* from adding input diversity was **−0.041268** and **−0.005693**, with negative reductions on both people. This failed the predeclared gain of at least +0.02 versus each control and positive gain on both people; retire the unchanged setting without expansion or reseeding. All three arms passed every condition on both native models for 029, but none passed all conditions on either native model for 030. There were no final detector or selection failures to misclassify as nonmatches.
+
+Export face RMS was 16.050–16.075; subsequent processing ranged 15.168–16.143, with at most 0.078 within-person, same-condition RMS spread across arms. The six searches took 240.1 seconds excluding model loading, about 38.0–40.4 seconds per arm. Root review found visible artificial dots with facial structure plausibly intact; independent human identity acceptance remains pending. No reserved final recognizer was used.
+
 ## Released line-drawing model
 
 As a prior-art comparison, the authors' [Informative Drawings](https://github.com/carolineec/informative-drawings) generator processed a 512-pixel crop with facial context, then composited its grayscale output inside the selected face. Two released styles on the four preselected people produced eight fixed JPEGs. Root review found more individual structure than the handmade stencils, especially in the lighter style, and allowed a bounded recognition check. This is not independent human acceptance or a new FCKFACE invention.
@@ -164,5 +177,7 @@ Runners, selection rules and model hashes are in this repository. Local run dire
 | Frozen relational dots / ArcFace | `3a51208d71ea943909ffe33e7aac5a46344f6370828042a7f06f23af9e57ab57` |
 | Alignment transfer mechanism diagnostic | `03ffc152d10d70876a8f9ef2443ec72d4e84454adb9fd87e4d16d58d69b4fb15` |
 | Released line-drawing model / SFace | `f105499fefc90b65a318d02c0cefc0ac11e5c6e8c5dcd8adb14c1ed8080a589f` |
+| Momentum/input-diversity dots / SFace and GhostFaceNet | `c068309288696f14dd3247ba9bf267394fb7318b0c79f7c5603eab32c4956b74` |
+| Frozen momentum/input-diversity dots / ArcFace | `b182b324c338044398dd5ddb7fc5f82c25df4e3410a4d26e5db055209e333434` |
 
 The detailed reports contain local biometric artifacts and are not distributed. The aggregate findings above are the public record; no release success rate is claimed.
