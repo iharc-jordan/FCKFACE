@@ -1,0 +1,36 @@
+# Personal biometric inputs and generated evidence
+*.jpg
+*.jpeg
+*.png
+*.webp
+*.heic
+*.tif
+*.tiff
+*.bmp
+*.gif
+*.avif
+*.npy
+*.npz
+*.onnx
+*.h5
+*.pt
+*.pth
+*.pkl
+*.pickle
+/cache/
+/outputs/
+/data/
+/work/
+
+# Local environments, builds, and credentials
+.venv/
+__pycache__/
+*.py[cod]
+node_modules/
+.next/
+.vercel/
+dist/
+build/
+.env
+.env.*
+*.log
