@@ -1,7 +1,7 @@
 FCKFACE research attribution
 
-The independent alignment implementation in openvino_development.py adapts
-the FaceIdentifier preprocessing from OpenVINO Open Model Zoo revision
+The independent alignment implementations in openvino_development.py and
+h14_0095_alignment.py adapt the FaceIdentifier preprocessing from OpenVINO Open Model Zoo revision
 a6946b6d6ce42cbf4278df20275fab199655fc7d.
 
 Copyright (c) 2018-2024 Intel Corporation

@@ -14,3 +14,5 @@ After calibration, each of the four frozen H7 JPEGs was reprocessed through all 
 | 003 | 0.446488 | 0.406986 |
 
 All exceed the frozen ArcFace threshold. This is a clear transfer failure for the current two-model-optimized dot exports. It does not test the reserved four-model held-out panel. The machine-readable private scoring artifact is `Downloads/FCKFACE-data/runs/arcface-development-v1/score.json` (SHA-256 `a02863a43fb16b2eb9dee8415c4359fd26db4f27991f5fb47a8b13fbfc0e1ce29`). The exact adapter and two-phase commands are in [arcface_development.py](arcface_development.py); its calibration-time SHA-256 was `7238216b83174131f39b5817ad24f56c8c546a3eab401175a2a3d536145ecaa0`.
+
+A later, separate [native ONNX-to-Torch component check](arcface-onnx-gradient.md) verified five fixed network inputs and input gradients. It did not rerun official ArcFace alignment or change these H7 development results.

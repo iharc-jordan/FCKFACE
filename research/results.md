@@ -195,6 +195,23 @@ Root's preliminary full-photo/crop screen found all four edits overtly artificia
 
 For 032, joint lowered ArcFace worst cosine by **0.061469** versus stack, but only **0.003608** versus the unchanged H12 base, below the predeclared 0.05 reduction against both controls. For 037, joint worsened versus stack by 0.056332 and H12 by 0.078821. The all-seven-valid and joint native-model nonmatch gates also failed. **Retire this fixed H13 setting without expansion.** The maximum paired same-condition processed face-RMS difference was 0.02922/0.04834 for 032/037, below the 0.25 imbalance flag. Each search took 31.08–33.85 seconds excluding model loading; this is not a browser benchmark. ArcFace was already development-influenced, and no reserved final recognizer or independent human identity test was used. No novelty, privacy or release claim follows.
 
+## Balanced loss and compact feature basis
+
+H14 held the regular RMS-16 dot carrier and two-gradient-model budget fixed while comparing A, SFace/GhostFaceNet global-max loss; B, their mean per-model condition-max loss; and C, the same balanced loss with compact OpenVINO 0095 replacing GhostFaceNet. Each of the six searches on development identities 001 and 003 used 18 forward passes, **17 effective Adam updates**, 144 edited model-condition gradient forwards, and no native checkpoint queries. Six step-18 JPEGs froze before gallery access. Root's preliminary full/crop review accepted all six as visibly artificial with facial structure intact; this is not independent human validation. The [full protocol and evidence note](balanced-basis.md) gives the alignment/parity safeguards, controls, artifact hashes and limitations.
+
+All four calibrated development models had valid clean references and matched clean controls. **All 168 edited model-condition evaluations were valid**, and all 42 processed candidate JPEG hashes agreed across the four scorers. Worst own-gallery cosine (maximum across seven conditions and four references) and valid nonmatch count are shown below; thresholds were SFace 0.515038, GhostFaceNet 0.343449, ArcFace 0.237600 and 0095 0.430598.
+
+| Identity / arm | SFace cosine; NM | Ghost cosine; NM | ArcFace cosine; NM | 0095 cosine; NM |
+| --- | ---: | ---: | ---: | ---: |
+| 001 / A global | 0.378995; 7/7 | 0.176111; 7/7 | 0.466608; 0/7 | 0.318730; 7/7 |
+| 001 / B balanced | 0.340187; 7/7 | 0.185707; 7/7 | 0.457518; 0/7 | 0.333550; 7/7 |
+| 001 / C S/0095 | 0.355694; 7/7 | 0.337936; 7/7 | 0.508057; 0/7 | 0.063274; 7/7 |
+| 003 / A global | 0.433299; 7/7 | 0.292154; 7/7 | 0.449066; 0/7 | 0.512765; 0/7 |
+| 003 / B balanced | 0.313521; 7/7 | 0.457544; 0/7 | 0.523761; 0/7 | 0.546873; 0/7 |
+| 003 / C S/0095 | 0.331400; 7/7 | 0.551096; 0/7 | 0.607925; 0/7 | 0.411799; 7/7 |
+
+Predeclared ArcFace worst-cosine reductions of at least +0.05 on **both** identities failed: B−A was +0.009090/−0.074695 for 001/003, and C−B was −0.050539/−0.084163. No arm passed all seven SFace, GhostFaceNet and 0095 conditions on both identities. The largest paired processed face-RMS gap was 0.169897, under the 0.25 balance gate. The six native searches took 137.13 seconds excluding model loading, not a browser benchmark. **Retire this fixed H14 setting without expansion.** ArcFace and 0095 are development models; the four reserved final recognizers were untouched. No privacy, independent transfer or release claim follows.
+
 ## Released line-drawing model
 
 As a prior-art comparison, the authors' [Informative Drawings](https://github.com/carolineec/informative-drawings) generator processed a 512-pixel crop with facial context, then composited its grayscale output inside the selected face. Two released styles on the four preselected people produced eight fixed JPEGs. Root review found more individual structure than the handmade stencils, especially in the lighter style, and allowed a bounded recognition check. This is not independent human acceptance or a new FCKFACE invention.
@@ -236,5 +253,8 @@ Runners, selection rules and model hashes are in this repository. Local run dire
 | Chimera dots executed source / optimization protocol / four-export freeze | `05d33fbbb90e2c499b83903753d4209bda29c6f0f2bd1aef15c481b2b27e881a` / `64682c04e154536d908cab051699dfa947deadab9036369ec7d34bd48f1b14da` / `95e4b04bfecf38d4d7c43f20d42ce5b9129d062f4ed4591b5989c40dc0aab0b7` |
 | Chimera dots frozen-input manifest / pre-score protocol / disposition | `9f384685223c4e8ef27cbac995446c756aaa7886fbe46ab8c3d9da3aedbed363` / `11ac02989fabe54774f63ff5f45f8779f3748cd276971ab248017a67dbe4c91d` / `091e31a7b5167362bedcfbd39b2e86ff2dcbe6ee9c060790d8d7d40a59626956` |
 | Chimera dots SFace / GhostFaceNet / ArcFace score JSON | `0c90e619efe1387021a0a1c13bed843ec80a832186681b34df7f60dfca1bb58b` / `b1009027784ca49915ba837e148c2585f5ee174accb895240cb8d32b7b0692ae` / `5096e90727b5602116ea913897f45e52d0d9bd7d52c4173f77f108a404fd2f5b` |
+| H14 optimizer / 0095 alignment helper | `246a54398ec4449c52b4a18a773f7e5549c0565db0e96ae01aee839f94728ebe` / `bb3e9ac953f2b2e880d6ed47dd70d35147c41be4fcec704e0fef4241ff17a3ca` |
+| H14 six-JPEG freeze / pre-score protocol / aggregate disposition | `512f8eb8976b3859b0eb236d36f10b17c092c3c76399e573b21edb3d9bf15773` / `2b0de2536888b1c930c1f8e1bbd038c891837148d972781cbb404deb5152eb5b` / `6b582c28149e8bdd2bece1a13e3461bc1488d5c0ec1114a2bac5d56edebc27ea` |
+| H14 SFace / GhostFaceNet / ArcFace / OpenVINO 0095 score JSON | `22374bf3ea6876ab839272da9cbbbed0b1a4a713e98fbf3d9804f8accd7a0fb5` / `c0426bd7292786418527a581f5c09d9c4ae49f660531ca6924d8116275fdc697` / `a90dddd533f5a240e8d705d6af2d48d7d124ccb64ba67bc70c4053c1d9e752ae` / `8015a7480862ef4a4a92423d2484da6436bbb497425813af5f81ade881d86d2c` |
 
 The detailed reports contain local biometric artifacts and are not distributed. The aggregate findings above are the public record; no release success rate is claimed.

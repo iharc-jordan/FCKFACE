@@ -22,7 +22,7 @@ Desktop browser emulation does not establish real iPhone or Android support. Pro
 
 ## Research
 
-The [research protocol](research/README.md) documents data acquisition, identity splits, calibrated native evaluation, hypotheses, controls and reproducible commands. [Development findings](research/results.md) include unsuccessful approaches, coverage and limitations. Keep datasets, photos, embeddings, model weights and generated outputs outside this repository. [Model provenance](research/models.json) separates development models from the reserved final panel.
+The [research protocol](research/README.md) documents data acquisition, identity splits, calibrated native evaluation, hypotheses, controls and reproducible commands. [Development findings](research/results.md), including the [balanced-loss and compact-basis screen](research/balanced-basis.md), record unsuccessful approaches, coverage and limitations. Keep datasets, photos, embeddings, model weights and generated outputs outside this repository. [Model provenance](research/models.json) separates development models from the reserved final panel.
 
 Public processing requires at least 95% of eligible unseen photos to fail clean-gallery matching on at least three of four independent models across every required image-processing condition, plus separate human appearance and device usability validation. Detection, alignment and selection failures are inconclusive. See [the accepted requirements](REQUIREMENTS.md) for the complete scope.
 
