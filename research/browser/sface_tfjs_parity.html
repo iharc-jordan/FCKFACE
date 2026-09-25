@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SFace TF.js synthetic parity</title>
+  <style>
+    body { max-width: 65rem; margin: 2rem auto; padding: 0 1rem; font: 16px/1.5 system-ui, sans-serif; color: #222; }
+    button { font: inherit; padding: .35rem .7rem; margin: .2rem .4rem .2rem 0; }
+    pre { padding: 1rem; overflow: auto; background: #f4f4f4; font: 13px/1.45 ui-monospace, monospace; }
+  </style>
+</head>
+<body>
+  <h1>SFace TF.js synthetic parity</h1>
+  <p>Local development check on a deterministic 112×112 RGB tensor. No photos are served. The model is not part of the public app.</p>
+  <button id="cpu" type="button">Run CPU parity</button>
+  <button id="webgl" type="button">Run WebGL parity</button>
+  <button id="warm" type="button">WebGL warm ×3</button>
+  <button id="cancel" type="button">Cancel / restart worker</button>
+  <p id="status" role="status" aria-live="polite">Ready.</p>
+  <pre id="result"></pre>
+  <script type="module" src="/sface_tfjs_parity.mjs"></script>
+</body>
+</html>

@@ -1,6 +1,6 @@
 # Browser model feasibility — 2026-09-25
 
-**Current evidence:** Exact OpenCV Zoo SFace ONNX runs in ONNX Runtime Web WASM and closely matches native OpenCV reference features on two development crops in both Node and Chrome. The low-dimensional H2 artwork search failed its expanded development test; no deployment method is selected. Native gradient experiments are separate from the browser forward-inference checks below. The public processor remains unavailable pending the project's independent evaluation gate.
+**Current evidence:** Exact OpenCV Zoo SFace ONNX runs in ONNX Runtime Web WASM and closely matches native OpenCV features on two development crops. Standard TensorFlow.js conversions of SFace and the exact-architecture GhostFaceNet float32 clone also passed synthetic output and input-gradient diagnostics in desktop Chrome. Their complete photo optimization, combined memory use and actual phone performance remain unverified. No research method has passed the protection requirements, so the public processor remains unavailable.
 
 ## Exact SFace forward inference route
 
@@ -73,7 +73,15 @@ The [reproducible conversion and worker probes](browser/ghost_tfjs_conversion.md
 
 CPU input gradients took about 19 seconds. WebGL's first gradient took about 45 seconds; three later gradients took 195–246 ms and forwards 39–73 ms. Model/input/target disposal reduced tensor count and occupied GPU bytes to zero, while the approximately 345 MB allocated texture pool remained free for reuse. These counters exclude total browser process memory. Root also cancelled an active worker, restarted it and observed a complete numerical pass, then terminated it.
 
-The current acceptance preference permits approximately 90 seconds with a visible progress bar (REQUIREMENTS.md). Cold loading and compilation must be included in that workflow measurement. The second model's differentiable browser path, real-photo alignment, complete optimization and actual iPhone/Android performance remain unverified. The [standard SFace conversion prospect](browser/ghost_tfjs_model_options.md) is being tested separately.
+The current acceptance preference permits approximately 90 seconds with a visible progress bar (REQUIREMENTS.md). Cold loading and compilation must be included in that workflow measurement. These separate synthetic probes are not a measured two-model photo workflow.
+
+## Measured SFace browser gradients
+
+The [standard SFace conversion and probe](browser/sface_tfjs_conversion.md) used a verified private copy of the original ONNX, the supported onnx2tf TensorFlow-converter backend and the unmodified TensorFlow.js converter. The resulting 38.63 MB GraphModel takes NHWC RGB values in 0–255; its own graph contains normalization. Native synthetic output and gradient parity passed before browser testing. The record also preserves a failed exporter, an accidental archive modification that was restored and a local HTTP loading stall corrected with the supported streaming loader. No modified model bytes replaced the calibrated reference.
+
+Desktop Chrome CPU and WebGL passed all five predeclared numerical checks, including three coordinate finite differences. Raw maximum errors versus native OpenCV were 2.03×10⁻⁶ and 5.07×10⁻⁶; input-gradient cosines exceeded 0.99999997. CPU forward/gradient took about 5.88/58.22 seconds during concurrent native research. WebGL's first forward/gradient took 3.29/8.64 seconds. In a subsequent worker, three warm forwards took 42.1–42.8 ms and gradients 155.7–158.9 ms, with unchanged numerical results.
+
+After model/input/target disposal, both backends reported zero tensors and occupied bytes. WebGL retained about 560 MB of free allocated texture cache. These counters exclude browser process memory and do not establish a peak or combined two-model memory bound. Root cancelled an active CPU gradient, restarted a fresh WebGL worker, observed a full numerical pass and stopped it. The numerical observations are transcribed from the rendered probe report and kept outside Git. No complete photo optimizer or actual iPhone/Android test has passed yet.
 
 ## Size, rights and integration boundary
 

@@ -121,6 +121,21 @@ The native search used a compiled TensorFlow gradient function after a synthetic
 
 An independently calibrated third development pipeline, official InsightFace SCRFD plus ArcFace R50, then evaluated the same four frozen JPEGs. All 200 calibration images were valid; the threshold was 0.2376004863 at an empirical false-match rate of 0.001. **All four edits still matched in every one of the seven conditions**, with no inconclusives. Worst gallery scores were 0.463426/0.491219 for fixed/refreshed 001 and 0.446488/0.406986 for 003. Both clean controls were eligible. The current two-model dot setting therefore fails this transfer screen and will not be expanded unchanged. See the [pinned ArcFace pipeline and results](arcface-development.md). None of the four reserved final recognizers was used.
 
+The later [H9 alignment diagnostic](alignment-diagnostic.md) held ArcFace's network and official clean gallery fixed while swapping only the four H7 query crops from SCRFD to YuNet landmarks. Median maximum-gallery cosine fell by 0.015, below the predeclared 0.05 criterion, and two of four edits worsened. All still matched. The canonical scores reproduced the earlier export scores within 2.9×10⁻⁸. These counterfactual queries do not replace official model results; the diagnostic did not support the proposed alignment-jitter experiment.
+
+## Cross-model identity-relation loss
+
+H8B represented each model's identity embedding by its similarities to 52 other development identities, each represented by four clean views. It tested whether making SFace and GhostFaceNet move together in this common relation space improved transfer. Controls were the same source-match loss without the relation term and the relation term with shuffled identity correspondence. All arms used the same dots, RMS 16, channel cap 64, seed, 18 steps and four objective conditions. Every arm unconditionally froze its step-18 forward JPEG before separate-gallery scoring; six native checkpoints were diagnostic only. The [method and reproducibility note](relational-dots.md) records the formula, synthetic gradient checks, failed original execution and isolated rerun.
+
+| Identity | Baseline ArcFace worst gallery cosine | Relational loss | Shuffled correspondence |
+| --- | ---: | ---: | ---: |
+| 021 | 0.592979 | 0.609110 | 0.603247 |
+| 026 | 0.628492 | 0.636106 | 0.630162 |
+
+Both clean identities were eligible on all three development models. ArcFace detected and matched all six exports in every condition: **0/42 nonmatching conditions**. The relational arm was worse than both controls for each person, failing its predeclared median improvement of at least 0.02 and both-person improvement. It is retired without expansion or reseeding. SFace/Ghost found no face in any of 021's baseline or relational conditions; the shuffled control was valid in four of seven. Those failures are inconclusive. All 026 conditions were valid, but every arm still matched in at least one condition on each model.
+
+Exported face RMS was 16.036–16.073, with within-person arm spread at most 0.030. The six native optimizations took 328.4 seconds after anchor construction, 49.2–59.6 seconds per arm. Root reviewed all full photos and face crops and found plausible likeness with artificial dots; independent human appearance acceptance remains untested. The four reserved final models remain untouched.
+
 ## Released line-drawing model
 
 As a prior-art comparison, the authors' [Informative Drawings](https://github.com/carolineec/informative-drawings) generator processed a 512-pixel crop with facial context, then composited its grayscale output inside the selected face. Two released styles on the four preselected people produced eight fixed JPEGs. Root review found more individual structure than the handmade stencils, especially in the lighter style, and allowed a bounded recognition check. This is not independent human acceptance or a new FCKFACE invention.
@@ -145,6 +160,9 @@ Runners, selection rules and model hashes are in this repository. Local run dire
 | Condition-specific alignment / both native recognizers | `09987614f0219835ba1f09c1e8fd8df75c4e748937297804d0313f2c7f79f30d` |
 | ArcFace development calibration | `a186f3d285f4cff65d8c187a65f5929c19b13b86f8170583dee34dccab9bb56a` |
 | Frozen condition-specific alignment / ArcFace | `a02863a43fb16b2eb9dee8415c4359fd26db4f27991f5fb47a8b13fbfc0e1ce29` |
+| Relational dots / SFace and GhostFaceNet | `cee94666ccf6a9a4a25a717120635cc6497144431f54c9ca683d248db32989af` |
+| Frozen relational dots / ArcFace | `3a51208d71ea943909ffe33e7aac5a46344f6370828042a7f06f23af9e57ab57` |
+| Alignment transfer mechanism diagnostic | `03ffc152d10d70876a8f9ef2443ec72d4e84454adb9fd87e4d16d58d69b4fb15` |
 | Released line-drawing model / SFace | `f105499fefc90b65a318d02c0cefc0ac11e5c6e8c5dcd8adb14c1ed8080a589f` |
 
 The detailed reports contain local biometric artifacts and are not distributed. The aggregate findings above are the public record; no release success rate is claimed.
