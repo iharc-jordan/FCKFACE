@@ -6,6 +6,12 @@ These experiments are development evidence, not release validation. The accepted
 
 Use Python 3.12 with `research/requirements.txt`; run unit tests from `research/` with `python -m unittest discover -s tests -v`. The measured native run used OpenCV 4.13.0, NumPy 2.5.3 and Pillow 12.3.0. Individual run manifests record exact versions and source hashes.
 
+Optional gradient diagnostics use `research/requirements-gradient.txt` in a separate environment. `sface_gradient_reference.py` checks the cached official SFace ONNX against OpenCV on a deterministic synthetic input and checks the input gradient with finite differences. Pass `--model` and an external `--output` path. It does not evaluate faces or establish browser parity.
+
+Optional [GhostFaceNet development evaluation](development-models.md) uses `research/requirements-ghostface.txt`. Its adapter loads the serialized author graph with legacy Keras; it shares the declared YuNet detector substitution but has its own author alignment, normalization and calibrated threshold. It is not a member of the reserved final panel.
+
+The [completed findings](results.md) include negative cross-model transfer and rejected appearance settings. [Portrait reproduction instructions](learned-portrait.md) pin the external author code and checkpoints used for the learned-drawing comparison. No images, embeddings or model weights are included in this source repository.
+
 Acquire the consented [Face Research Lab London Set, version 5](https://doi.org/10.6084/m9.figshare.5047666.v5):
 
 ```powershell

@@ -1,0 +1,5 @@
+-r requirements.txt
+# Optional local author-H5 development evaluation; no public model bundle.
+tensorflow==2.21.0
+tf-keras==2.21.0
+scikit-image==0.26.0

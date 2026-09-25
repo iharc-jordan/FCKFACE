@@ -394,8 +394,8 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--subset", choices=("pilot", "confirm"), default="pilot")
     parser.add_argument("--manifest", type=Path, required=True)
-    parser.add_argument("--selection", type=Path, default=(Path.home() / "Downloads" /
-                        "FCKFACE-data" / "runs" / "screen-v1" / "selection.json"))
+    parser.add_argument("--selection", type=Path,
+                        default=Path(__file__).with_name("screen-v1-selection.json"))
     parser.add_argument("--calibration", type=Path, required=True)
     parser.add_argument("--yunet", type=Path, required=True)
     parser.add_argument("--sface", type=Path, required=True)

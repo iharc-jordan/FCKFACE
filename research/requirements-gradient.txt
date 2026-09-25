@@ -1,0 +1,5 @@
+-r requirements.txt
+# Optional native gradient experiments; not browser or production dependencies.
+torch==2.14.0
+onnx==1.23.0
+onnx2torch==1.5.15

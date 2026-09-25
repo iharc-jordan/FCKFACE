@@ -6,7 +6,7 @@ FCKFACE researches visible photo edits intended to make facial matching harder w
 
 ## Status
 
-There is a local browser prototype and a reproducible development evaluation harness. **No method has passed the protection or human-appearance requirements.** The public build contains a research status page, with no photo processor. A working image effect is not evidence of facial privacy.
+The [public research site](https://fckface.vercel.app), local browser prototype and reproducible development evaluation harness are available. **No method has passed the protection or human-appearance requirements.** The public site contains a research status page, with no photo processor. A working image effect is not evidence of facial privacy.
 
 The previous single-user research repository and its private evidence remain on Jordan's computer. [Prior work and handoff](docs/prior-work.md) identifies what was tried and where to find it. Personal photographs, embeddings, model weights, and generated results are excluded from this repository.
 

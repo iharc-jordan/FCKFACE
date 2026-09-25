@@ -21,10 +21,70 @@
     }
   },
   "reserved_final_panel": [
-    {"name": "AdaFace", "source": "https://github.com/mk-minchul/AdaFace"},
-    {"name": "MagFace", "source": "https://github.com/IrvingMeng/MagFace"},
-    {"name": "EdgeFace", "source": "https://github.com/otroshi/edgeface"},
-    {"name": "TransFace", "source": "https://github.com/DanJun6737/TransFace"}
+    {
+      "name": "AdaFace",
+      "source": "https://github.com/mk-minchul/AdaFace",
+      "source_commit": "c60eaa786a42c03444f3df7096dbaf9d57ae010d",
+      "primary_checkpoint": "adaface_ir101_ms1mv2.ckpt",
+      "architecture": "ir_101 (the official README's R100 / MS1MV2 row)",
+      "checkpoint_url": "https://drive.google.com/file/d/1m757p4-tUU5xlSHLaO04sqnhvqankimN/view?usp=sharing",
+      "checkpoint_status": "Downloaded from the pinned author's Google Drive link with gdown to Downloads/FCKFACE-data/heldout-models; hashed, not loaded or evaluated.",
+      "checkpoint_bytes": 436798739,
+      "checkpoint_sha256": "4a26839460d8e1a5e8a13a0d7968e919d464f482aa0f8350f9e2cec84fe37481",
+      "preprocessing": "Official MTCNN alignment of PIL RGB image to 112x112; convert aligned RGB to BGR, then float32 CHW (value/255 - 0.5)/0.5. The new official CVLFace repository is noted upstream; this panel freezes the original AdaFace release and checkpoint.",
+      "preprocessing_sources": ["https://github.com/mk-minchul/AdaFace/blob/c60eaa786a42c03444f3df7096dbaf9d57ae010d/README.md", "https://github.com/mk-minchul/AdaFace/blob/c60eaa786a42c03444f3df7096dbaf9d57ae010d/inference.py", "https://github.com/mk-minchul/AdaFace/blob/c60eaa786a42c03444f3df7096dbaf9d57ae010d/face_alignment/align.py"],
+      "repository_license": "MIT",
+      "artifact_terms": "Checkpoint is linked by the author, but no separate weight/data redistribution terms verified; keep local and unpublished.",
+      "threshold": null
+    },
+    {
+      "name": "MagFace",
+      "source": "https://github.com/IrvingMeng/MagFace",
+      "source_commit": "99bae614ac2643b9694bf18e0c5645272ff6acfa",
+      "primary_checkpoint": "magface_epoch_00025.pth",
+      "architecture": "official DDP MagFace iResNet100 / MS1MV2",
+      "checkpoint_url": "https://drive.google.com/file/d/1Bd87admxOZvbIOAyTkGEntsEz3fyMt7H/view?usp=sharing",
+      "checkpoint_status": "Downloaded from the pinned author's Google Drive link with gdown to Downloads/FCKFACE-data/heldout-models; hashed, not loaded or evaluated.",
+      "checkpoint_bytes": 283040192,
+      "checkpoint_sha256": "cfeba792dada6f1f30d1e118aff077d493dd95dd76c77c30f57f90fd0164ad58",
+      "preprocessing": "Use five-landmark 112x112 alignment to the linked InsightFace template. Official feature extractor reads aligned crops with cv2.imread (BGR), ToTensor scales to [0,1], Normalize(mean=0,std=1) leaves values unchanged; horizontal flip is generated but the recognition feature path uses the unflipped input. Do not substitute RGB or [-1,1] normalization.",
+      "preprocessing_sources": ["https://github.com/IrvingMeng/MagFace/blob/99bae614ac2643b9694bf18e0c5645272ff6acfa/README.md", "https://github.com/IrvingMeng/MagFace/blob/99bae614ac2643b9694bf18e0c5645272ff6acfa/inference/gen_feat.py", "https://github.com/deepinsight/insightface/blob/cdc3d4ed5de14712378f3d5a14249661e54a03ec/python-package/insightface/utils/face_align.py"],
+      "repository_license": "Apache-2.0",
+      "artifact_terms": "Checkpoint is linked by the author, but no separate weight/data redistribution terms verified; keep local and unpublished.",
+      "threshold": null
+    },
+    {
+      "name": "EdgeFace",
+      "source": "https://github.com/otroshi/edgeface",
+      "source_commit": "ce86851cfc37979a9cd2558598d0e9bc592cbba3",
+      "primary_checkpoint": "edgeface_s_gamma_05.pt",
+      "architecture": "edgeface_s_gamma_05",
+      "checkpoint_url": "https://raw.githubusercontent.com/otroshi/edgeface/ce86851cfc37979a9cd2558598d0e9bc592cbba3/checkpoints/edgeface_s_gamma_05.pt",
+      "checkpoint_status": "Official pinned-repository file downloaded to Downloads/FCKFACE-data/heldout-models for preparation only; not loaded or evaluated.",
+      "checkpoint_bytes": 14695737,
+      "checkpoint_sha256": "dc59abda2e8580399fd115a1eeb07e1f21156196db604b884407bcf0f17efb07",
+      "preprocessing": "Official MTCNN alignment from PIL RGB to 112x112; ToTensor then Normalize(mean=0.5,std=0.5) per RGB channel, producing [-1,1].",
+      "preprocessing_sources": ["https://github.com/otroshi/edgeface/blob/ce86851cfc37979a9cd2558598d0e9bc592cbba3/README.md", "https://github.com/otroshi/edgeface/blob/ce86851cfc37979a9cd2558598d0e9bc592cbba3/face_alignment/align.py"],
+      "repository_license": "BSD-3-Clause",
+      "artifact_terms": "Checkpoint is in the author's repository; no separate training-data or model-artifact rights determination has been made. Keep local and unpublished.",
+      "threshold": null
+    },
+    {
+      "name": "TransFace",
+      "source": "https://github.com/DanJun6737/TransFace",
+      "source_commit": "fb6cd56d04c7ea525e328219f5d5066adac03ada",
+      "primary_checkpoint": "ms1mv2_model_TransFace_S.pt",
+      "architecture": "vit_s_dp005_mask_0 / MS1MV2",
+      "checkpoint_url": "https://drive.google.com/file/d/1UZWCg7jNESDv8EWs7mxQSswCMGbAZNF4/view?usp=share_link",
+      "checkpoint_status": "Downloaded from the pinned author's Google Drive link with gdown to Downloads/FCKFACE-data/heldout-models; hashed, not loaded or evaluated.",
+      "checkpoint_bytes": 346705361,
+      "checkpoint_sha256": "4feccc6a0426c775a52a2e2d8750c9c1d04425f0cb604bd6b2bea24de458b8ac",
+      "preprocessing": "Official inference.py reads BGR with cv2, resizes to 112x112, converts to RGB, then float32 CHW (value/255 - 0.5)/0.5. Its model-facing inference example assumes a face crop; the separate ModelScope example uses RetinaFace, largest-face selection and alignment. Exact detector/alignment policy for this checkpoint remains to be frozen before calibration.",
+      "preprocessing_sources": ["https://github.com/DanJun6737/TransFace/blob/fb6cd56d04c7ea525e328219f5d5066adac03ada/README.md", "https://github.com/DanJun6737/TransFace/blob/fb6cd56d04c7ea525e328219f5d5066adac03ada/inference.py"],
+      "repository_license": "No LICENSE file found in pinned repository root",
+      "artifact_terms": "Code and checkpoint redistribution terms unresolved; keep local and unpublished.",
+      "threshold": null
+    }
   ],
-  "final_panel_status": "Reserved and not evaluated. Pin official checkpoint, permitted use and native pipeline before calibration; never use the final panel for candidate optimization."
+  "final_panel_status": "Primary official checkpoints and repository commits predeclared on 2026-09-25; no held-out image, model inference, score or calibration performed. Calibrate model-specific thresholds on calibration identities and freeze alignment, gallery rule and conditions before final evaluation. Never use this panel for candidate optimization."
 }
