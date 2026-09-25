@@ -1,14 +1,16 @@
 # Development findings — 25 September 2026
 
-**No method meets the release requirements.** These are small development experiments against SFace and GhostFaceNet, both used in earlier work. AdaFace, MagFace, EdgeFace and TransFace have not been evaluated. Independent human appearance review and real-phone testing are pending.
+**No method meets the release requirements.** These are small development experiments against SFace, GhostFaceNet, ArcFace and OpenVINO 0095. AdaFace, MagFace, EdgeFace and TransFace have not been evaluated. Independent human appearance review and real-phone testing are pending.
 
 The [protocol](README.md) defines the frozen model, preprocessing and seven processing conditions. Each comparison uses the exact exported JPEG, fresh detection/alignment, and the original plus three separate clean references. A nonmatch requires every reference to fall below the calibrated threshold; a failed detection cannot count as a nonmatch. Repeated seeds, parameters and processing conditions are correlated observations, not additional people.
 
 ## Calibration
 
-FRLL's separate calibration split contains 20 identities and 200 images. Native preprocessing produced 173 valid embeddings; 27 missing detections remained inconclusive. Of 19,900 possible pairs, 14,197 impostor and 681 genuine pairs were valid, for 74.76% pair coverage. At a target false-match rate of 0.001, the frozen cosine threshold is **0.5150383510**. Empirical false-match and false-nonmatch rates are 0.0009861 and 0.0969163. Leaving one identity out changes the estimated threshold from 0.488984 to 0.522429. This limited calibration is not a population guarantee.
+FRLL's separate calibration split contains 20 identities and 200 images. Native SFace preprocessing produced 173 valid embeddings; 27 missing detections remained inconclusive. Of 19,900 possible pairs, 14,197 impostor and 681 genuine pairs were valid, for 74.76% pair coverage. At a target false-match rate of 0.001, the frozen cosine threshold is **0.5150383510**. Empirical false-match and false-nonmatch rates are 0.0009861 and 0.0969163. Leaving one identity out changes the estimated threshold from 0.488984 to 0.522429. This limited calibration is not a population guarantee.
 
 The second development recognizer, GhostFaceNet, loads its serialized author H5 graph directly with its saved mixed precision, author RGB/skimage alignment and normalization, and a declared YuNet detector substitution. On the same calibration identities it produced 173 valid images, the same valid-pair coverage, and a separate threshold of **0.3434492487**. Empirical valid-pair FMR was 0.0009861 and FNMR 0.01762; leave-one-identity-out thresholds ranged 0.337702–0.344438. See [the model and preprocessing record](development-models.md). Neither calibration establishes population performance or held-out effectiveness.
+
+The additional [OpenVINO 0095 development calibration](openvino-development.md) uses the same 20 calibration identities and a separately pinned Intel demo pipeline with YuNet substitution. It yielded 173 valid images, 681 genuine and 14,197 impostor pairs, and 5,022 invalid pairs. Its frozen threshold is **0.4305980817**, with 14 false matches and 52 false nonmatches; leave-one-identity-out thresholds ranged 0.407524–0.433166. The record explains a corrected metadata description: the executed alignment uses nearest-neighbor warp followed by linear resize. No reserved model was used.
 
 ## Fixed effects and selective reconstruction
 
@@ -123,6 +125,8 @@ An independently calibrated third development pipeline, official InsightFace SCR
 
 The later [H9 alignment diagnostic](alignment-diagnostic.md) held ArcFace's network and official clean gallery fixed while swapping only the four H7 query crops from SCRFD to YuNet landmarks. Median maximum-gallery cosine fell by 0.015, below the predeclared 0.05 criterion, and two of four edits worsened. All still matched. The canonical scores reproduced the earlier export scores within 2.9×10⁻⁸. These counterfactual queries do not replace official model results; the diagnostic did not support the proposed alignment-jitter experiment.
 
+A subsequent [OpenVINO 0095 diagnostic](openvino-development.md) scored these same four H7 JPEGs without changing them. Both clean controls were eligible and all 28 edited conditions were valid; their processed JPEG hashes matched the original H7 audit. For 001, both fixed and refreshed edits failed matching to every clean reference in all seven conditions, with worst cosines 0.305917 and 0.308577 (threshold 0.430598). For 003, both edits matched in all seven, with worst cosines 0.495844 and 0.581495. This establishes limited transfer to an additional development model for one of two people, not a reliable method or independent release evidence. The diagnostic took 9.578 seconds with 272 MB peak process working set; it was not a generation or browser benchmark.
+
 ## Cross-model identity-relation loss
 
 H8B represented each model's identity embedding by its similarities to 52 other development identities, each represented by four clean views. It tested whether making SFace and GhostFaceNet move together in this common relation space improved transfer. Controls were the same source-match loss without the relation term and the relation term with shuffled identity correspondence. All arms used the same dots, RMS 16, channel cap 64, seed, 18 steps and four objective conditions. Every arm unconditionally froze its step-18 forward JPEG before separate-gallery scoring; six native checkpoints were diagnostic only. The [method and reproducibility note](relational-dots.md) records the formula, synthetic gradient checks, failed original execution and isolated rerun.
@@ -148,6 +152,33 @@ H10 compared Adam, momentum sign descent, and momentum plus random resize/pad of
 Both clean people were eligible on SFace, GhostFaceNet and ArcFace. All 126 edited seven-condition model evaluations were valid; **ArcFace still matched all 42 candidate conditions** against four own-gallery views (threshold 0.2376004863). Against Adam and momentum respectively, the median ArcFace worst-gallery cosine *reduction* from adding input diversity was **−0.041268** and **−0.005693**, with negative reductions on both people. This failed the predeclared gain of at least +0.02 versus each control and positive gain on both people; retire the unchanged setting without expansion or reseeding. All three arms passed every condition on both native models for 029, but none passed all conditions on either native model for 030. There were no final detector or selection failures to misclassify as nonmatches.
 
 Export face RMS was 16.050–16.075; subsequent processing ranged 15.168–16.143, with at most 0.078 within-person, same-condition RMS spread across arms. The six searches took 240.1 seconds excluding model loading, about 38.0–40.4 seconds per arm. Root review found visible artificial dots with facial structure plausibly intact; independent human identity acceptance remains pending. No reserved final recognizer was used.
+
+## Sparse versus inverse dot support
+
+H11 compared literal radius-0.3 dots with their exact complement **inside the same 14×14 grid**, using the same 588 RGB coefficients, seed, Adam update, face RMS 16 and channel cap 64. Each arm made three forward/gradient steps (24 edited model-condition forwards) and one native diagnostic checkpoint; its frozen step-3 forward JPEG reflected **two prior updates**, because the third update occurred after that JPEG was made. All four JPEGs froze before other same-person photos were read. The [protocol and reproducibility note](support-probe.md) records support counts, source hashes and the fixed gate.
+
+| Identity | Dots ArcFace worst gallery cosine | Inverse dots | Inverse reduction | SFace/Ghost normalized-margin worsening |
+| --- | ---: | ---: | ---: | --- |
+| 001 | **0.556686** | 0.617093 | −0.060407 | +0.151425 / +0.204634 |
+| 003 | 0.603987 | **0.596368** | +0.007619 | +0.138188 / −0.075040 |
+
+Both clean people were eligible on all three **development** models. All 84 edited model-condition evaluations were valid, but all 28 ArcFace conditions matched own identity. Inverse dots missed the predeclared improvement of at least +0.05 on **each** person; three of four native-margin comparisons also worsened beyond +0.02. Retire only this bounded three-step setting, not every possible broader-support method. The exact exported face RMS was 16.048–16.058, and the largest processed-condition arm difference was 0.140 RMS, below the 0.25 imbalance flag. The inverse arm changed 86.2–86.8% of face pixels after export versus 51.6–52.0% for dots: matching RMS does not separate spatial support from local amplitude distribution. Root found the pattern clearly artificial with plausible face structure, which is screening rather than independent human acceptance. ArcFace was excluded from gradient optimization but had already informed development research; it is not an independent holdout. No reserved final recognizer was used.
+
+## Eye-positive contrast chimera
+
+H12 tested a continuous-tone blue graphic treatment on two development identities. The clean source eyes/eyebrows stayed positive while the rest of the oval face had reversed luminance order. Its appearance rationale came from [human contrast-chimera research](https://pmc.ncbi.nlm.nih.gov/articles/PMC2664053/), which did not establish machine-recognizer efficacy. The same-support monotone control was matched within predeclared tolerances on exported-JPEG face RMS and changed-face fraction. This was a different, much stronger distortion regime than RMS-16 dots: face RMS was 57.270 for 032 and 61.962 for 037. The [protocol, formulas and reproducibility note](contrast-chimera.md) record the six fixed JPEGs and private hashes.
+
+Root reviewed both full photos and face crops **before any H12 recognition scoring**. The two chimeras and 032 monotone control had plausibly intact facial structure with an overt artificial effect. Both full negatives had uncertain eyes/likeness. The 037 monotone control erased substantial detail and was rejected, despite near-identical numerical RMS/coverage to its chimera; its monotone mapping clipped 55.37% of treated pixels. The three rejected JPEGs were preserved but never scored. This is root screening, not independent human identity confirmation; no isolated polarity inference is available for 037.
+
+The subsequent development-only protocol froze exactly the three approved JPEG hashes, seven processing conditions, four own clean references, calibrated SFace/GhostFaceNet/official ArcFace, clean eligibility, and the forward gate **before gallery/model access**. All nine clean controls were eligible and matched in all seven conditions. All **63/63 edited model-condition evaluations were valid**, with no inconclusives. Nonmatching conditions: SFace **0/21**, GhostFaceNet **7/21** (all seven for the 032 chimera only), ArcFace **0/21**. Worst own-gallery cosine follows; thresholds were 0.515038, 0.343449 and 0.237600 respectively.
+
+| Identity / arm | SFace | GhostFaceNet | ArcFace |
+| --- | ---: | ---: | ---: |
+| 032 / eye-positive chimera | 0.662766 | **0.231306** | 0.494497 |
+| 032 / monotone control | 0.713437 | 0.716080 | 0.850276 |
+| 037 / eye-positive chimera | 0.734254 | 0.398249 | 0.504418 |
+
+The 032 chimera improved ArcFace worst cosine by **0.355779** over its matched approved control, exceeding the gate's 0.05 margin component, but ArcFace and SFace still matched both chimeras under every condition. Neither chimera met the required all-seven nonmatch on all three models. **Retire this fixed setting without expansion.** ArcFace was already development-influenced; no reserved final recognizer was touched and no privacy or release claim follows. An SFace calibration-registry metadata mismatch was resolved with an exact historical-registry/full-development-subtree provenance addendum after scoring, before score values were inspected; the executed wrapper is preserved. The current SFace wrapper requires an explicit exact calibrated registry for future runs and has passed preflight only. See the [full provenance account](contrast-chimera.md).
 
 ## Released line-drawing model
 
@@ -179,5 +210,13 @@ Runners, selection rules and model hashes are in this repository. Local run dire
 | Released line-drawing model / SFace | `f105499fefc90b65a318d02c0cefc0ac11e5c6e8c5dcd8adb14c1ed8080a589f` |
 | Momentum/input-diversity dots / SFace and GhostFaceNet | `c068309288696f14dd3247ba9bf267394fb7318b0c79f7c5603eab32c4956b74` |
 | Frozen momentum/input-diversity dots / ArcFace | `b182b324c338044398dd5ddb7fc5f82c25df4e3410a4d26e5db055209e333434` |
+| Sparse/inverse dot support / SFace and GhostFaceNet | `3f79d0945fd210abe9a977f61940cde620719b25bf1cc113089fbea9aa40a9cc` |
+| Frozen sparse/inverse dot support / ArcFace | `c31565f1aede38168a72ea767e53e52f0c9d95dc4d7af446c5d36c157143a11c` |
+| Contrast chimera executed renderer / pre-render protocol | `1e3f09b3d4644dde2c97d26bcdc91738658d7235109b0b8f17ea9785d06a472c` / `061ca9cc2ec7de71b03c9d47cf934f2c6df6beeae119984382bf506669a1a952` |
+| Contrast chimera six-output freeze / three-row scoring freeze | `4ead5e5e4a3abe3f4758539859b2a4089677779cf8fdb78f6829ed43dcd8cdad` / `1c2d015ba93489f6a58f25cc4831c4e6383c78693d9280d0d8b641e129c1ce61` |
+| Contrast chimera pre-score protocol / 63-row aggregate | `80151baec4e0edb1034c24da5b0683b2c2023fb3c6ffc148e94101f5442c42aa` / `b4d54ad38cabf6253fa0e30c45cd0f9e1db3970031fe1665a858026194917423` |
+| Contrast chimera SFace / GhostFaceNet / ArcFace scores | `f20748e849853375749d7adf1d63e7ba0dfaa73b437a0305d55549e264edb7c5` / `b734779e299da0b586c1ea0c245aa6242d9488232ca91eb4c42288347fb7b366` / `3dae8e2cc7701820fd1849b36c49b1fd928a71edd4872b7777435e330669732e` |
+| OpenVINO 0095 calibration | `f33a0e6fa03a4853013eea9fdda9c6c2d0c008a2f6655fd52064bb0187d1275a` |
+| Frozen H7 dots / OpenVINO 0095 | `f68c320e51b1ceb5cc49a21867e60b3b706052e7bbb155397b1dc46b5dbaa60b` |
 
 The detailed reports contain local biometric artifacts and are not distributed. The aggregate findings above are the public record; no release success rate is claimed.

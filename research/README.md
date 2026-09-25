@@ -12,6 +12,8 @@ Optional [GhostFaceNet development evaluation](development-models.md) uses `rese
 
 The [completed findings](results.md) include negative cross-model transfer and rejected appearance settings. A third [official ArcFace development pipeline](arcface-development.md) exposed a transfer failure after dots succeeded on the two optimized models. [Portrait reproduction instructions](learned-portrait.md) pin the external author code and checkpoints used for the learned-drawing comparison. No images, embeddings or model weights are included in this source repository.
 
+A fourth [OpenVINO 0095 development pipeline](openvino-development.md) uses Intel's pinned FP32 artifact and demo preprocessing with the declared YuNet substitution. Its separate calibration and four-export H7 diagnostic are complete; only one of two people passed all seven conditions. Its isolated environment uses OpenVINO 2025.4.1, OpenCV 4.13.0, NumPy 2.3.5 and Pillow. The model metadata grants Apache-2.0 for the artifacts, but browser conversion and a deployable method remain unverified. See [research attribution](NOTICE).
+
 Acquire the consented [Face Research Lab London Set, version 5](https://doi.org/10.6084/m9.figshare.5047666.v5):
 
 ```powershell
