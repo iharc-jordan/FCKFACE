@@ -10,7 +10,7 @@ Optional gradient diagnostics use `research/requirements-gradient.txt` in a sepa
 
 Optional [GhostFaceNet development evaluation](development-models.md) uses `research/requirements-ghostface.txt`. Its adapter loads the serialized author graph with legacy Keras; it shares the declared YuNet detector substitution but has its own author alignment, normalization and calibrated threshold. It is not a member of the reserved final panel.
 
-The [completed findings](results.md) include negative cross-model transfer and rejected appearance settings. [Portrait reproduction instructions](learned-portrait.md) pin the external author code and checkpoints used for the learned-drawing comparison. No images, embeddings or model weights are included in this source repository.
+The [completed findings](results.md) include negative cross-model transfer and rejected appearance settings. A third [official ArcFace development pipeline](arcface-development.md) exposed a transfer failure after dots succeeded on the two optimized models. [Portrait reproduction instructions](learned-portrait.md) pin the external author code and checkpoints used for the learned-drawing comparison. No images, embeddings or model weights are included in this source repository.
 
 Acquire the consented [Face Research Lab London Set, version 5](https://doi.org/10.6084/m9.figshare.5047666.v5):
 

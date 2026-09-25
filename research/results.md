@@ -102,6 +102,25 @@ The joint result for 003 failed only SFace's crop condition: its smiling clean r
 
 Root full-photo and crop review found artificial regular circles with plausible likeness; independent human appearance review is still pending. Post-export RMS was 16.04–16.06. Ghost-only search took 134.91/128.30 seconds and joint search 74.68/79.52 seconds on native CPU, with 453.93 seconds for the complete experiment. Neither meets a demonstrated one-minute browser workflow. Checkpoint step numbers refer to the forward pass before that step's Adam update.
 
+## Condition-specific alignment
+
+H7 tested whether refreshing landmarks on edited images helps more than fixed clean landmarks for each processing condition. Both arms used the same regular dots, RMS 16, channel cap 64, seed, 18 gradient steps and four objective conditions (export, JPEG75, blur and crop90). Each arm made 144 gradient model-condition evaluations, six checkpoints and 48 native selection queries. The refresh arm updated edited-image landmarks every three steps; detector coordinates were treated as constants in the backward pass. Every selected JPEG was frozen before separate gallery evaluation.
+
+Both clean controls were eligible; all 56 edited model-condition evaluations were valid. Worst gallery cosine across the seven conditions follows:
+
+| Identity / alignment | SFace (threshold 0.51504) | GhostFaceNet (threshold 0.34345) | Native search seconds |
+| --- | ---: | ---: | ---: |
+| 001 / fixed per condition | **0.40482** | **0.19269** | 44.17 |
+| 001 / refreshed | **0.40143** | **0.20201** | 52.19 |
+| 003 / fixed per condition | **0.43742** | **0.28855** | 43.93 |
+| 003 / refreshed | **0.41477** | **0.23874** | 46.12 |
+
+Both arms passed both development models in every condition on these two people. Refresh added no binary success and did not uniformly lower scores. These results do not demonstrate a general benefit from refresh. Comparison with H6 does not isolate the effect of cropping: the objective conditions, step count, alignment treatment and native query count changed together.
+
+The native search used a compiled TensorFlow gradient function after a synthetic eager/compiled check (value difference zero; maximum gradient difference 2.44×10⁻¹¹). Search timings exclude model loading and initial compilation and are not a one-minute browser workflow. Total experiment wall time was 229.56 seconds; post-export face RMS was 16.03–16.07. Root reviewed full photos and crops and found plausible likeness with artificial dots. Independent human acceptance and transfer to other recognizers remain unestablished.
+
+An independently calibrated third development pipeline, official InsightFace SCRFD plus ArcFace R50, then evaluated the same four frozen JPEGs. All 200 calibration images were valid; the threshold was 0.2376004863 at an empirical false-match rate of 0.001. **All four edits still matched in every one of the seven conditions**, with no inconclusives. Worst gallery scores were 0.463426/0.491219 for fixed/refreshed 001 and 0.446488/0.406986 for 003. Both clean controls were eligible. The current two-model dot setting therefore fails this transfer screen and will not be expanded unchanged. See the [pinned ArcFace pipeline and results](arcface-development.md). None of the four reserved final recognizers was used.
+
 ## Released line-drawing model
 
 As a prior-art comparison, the authors' [Informative Drawings](https://github.com/carolineec/informative-drawings) generator processed a 512-pixel crop with facial context, then composited its grayscale output inside the selected face. Two released styles on the four preselected people produced eight fixed JPEGs. Root review found more individual structure than the handmade stencils, especially in the lighter style, and allowed a bounded recognition check. This is not independent human acceptance or a new FCKFACE invention.
@@ -123,6 +142,9 @@ Runners, selection rules and model hashes are in this repository. Local run dire
 | Gradient artwork / native SFace | `0597e91bdff62c88cf26436210f5dafec4c795cb7eafb1b381ea2355f0ded1f3` |
 | Frozen gradient artwork / GhostFaceNet | `00bb2acd6332a53d38ad5909be141e44a447b2cdcf2f66045da6354c70568b52` |
 | Joint-model dots / both native recognizers | `40cd21968ec24a69739747e50a053cb02aca3c0b8eac9dd7c10176990ea561d7` |
+| Condition-specific alignment / both native recognizers | `09987614f0219835ba1f09c1e8fd8df75c4e748937297804d0313f2c7f79f30d` |
+| ArcFace development calibration | `a186f3d285f4cff65d8c187a65f5929c19b13b86f8170583dee34dccab9bb56a` |
+| Frozen condition-specific alignment / ArcFace | `a02863a43fb16b2eb9dee8415c4359fd26db4f27991f5fb47a8b13fbfc0e1ce29` |
 | Released line-drawing model / SFace | `f105499fefc90b65a318d02c0cefc0ac11e5c6e8c5dcd8adb14c1ed8080a589f` |
 
 The detailed reports contain local biometric artifacts and are not distributed. The aggregate findings above are the public record; no release success rate is claimed.
