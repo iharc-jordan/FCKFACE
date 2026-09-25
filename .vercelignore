@@ -1,0 +1,9 @@
+research/
+tests/
+work/
+docs/
+dist-research/
+test-results/
+playwright-report/
+__pycache__/
+*.py

@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SFace local WASM parity probe</title>
+  <style>
+    body { max-width: 58rem; margin: 2rem auto; padding: 0 1rem; font: 16px/1.5 system-ui, sans-serif; color: #222; }
+    pre { padding: 1rem; overflow: auto; background: #f4f4f4; font: 13px/1.45 ui-monospace, monospace; }
+  </style>
+</head>
+<body>
+  <h1>SFace local WASM parity probe</h1>
+  <p>Development-only forward inference test. It does not measure privacy protection or recognition resistance. The model and development tensors are served from this machine.</p>
+  <p id="status" role="status" aria-live="polite">Loading local model and development tensors…</p>
+  <pre id="result"></pre>
+  <script type="module" src="/sface_parity.mjs"></script>
+</body>
+</html>

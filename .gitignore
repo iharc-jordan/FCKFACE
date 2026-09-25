@@ -34,3 +34,13 @@ build/
 .env
 .env.*
 *.log
+.pytest_cache/
+.ruff_cache/
+coverage/
+test-results/
+playwright-report/
+*.tsbuildinfo
+.DS_Store
+/dist-research/
+
+.vercel

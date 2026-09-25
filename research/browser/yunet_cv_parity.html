@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>YuNet/OpenCV.js local pipeline parity</title>
+  <style>
+    body { max-width: 58rem; margin: 2rem auto; padding: 0 1rem; font: 16px/1.5 system-ui, sans-serif; color: #222; }
+    button { font: inherit; padding: .35rem .7rem; margin-right: .5rem; }
+    pre { padding: 1rem; overflow: auto; background: #f4f4f4; font: 13px/1.45 ui-monospace, monospace; }
+  </style>
+</head>
+<body>
+  <h1>YuNet/OpenCV.js local pipeline parity</h1>
+  <p>Development-only detector and alignment test. This does not measure privacy protection or recognition resistance. Assets are served from this machine.</p>
+  <button id="start" type="button">Run again</button><button id="cancel" type="button">Cancel</button>
+  <p id="status" role="status" aria-live="polite">Starting…</p><pre id="result"></pre>
+  <script type="module" src="/yunet_cv_parity.mjs"></script>
+</body>
+</html>

@@ -12,6 +12,6 @@ This is a setup handoff, not a new experiment or a claim of facial privacy effec
 
 ## Current conclusion and transfer boundary
 
-No tested workflow has reliably prevented matching, and no novel contribution is established. The previous scripts are tailored to one private pilot, with local paths and experiment-specific assumptions. They have not been copied into this clean product repository. Preserve the prior Git history and local results for later review; select or generalize code only when Jordan resumes the work.
+No tested workflow has reliably prevented matching, and no novel contribution is established. The previous scripts are tailored to one private pilot, with local paths and experiment-specific assumptions. Preserve the prior Git history and local results. The September 25 implementation now selectively reuses the cached model artifacts and evaluates new code in a separate harness.
 
-Start any later technical review with the old repository's `HANDOFF-FCKFACE.md`, `RESEARCH.md`, `MODEL-SOURCES.md`, `REQUIREMENTS.md`, and `work/task-state/pattern-free-pilot.md`, then inspect its current Git status and exact experiment results. The earlier project's local-only, no-UI scope has been superseded by FCKFACE's upload-and-result goal. Product architecture and inference location remain undecided.
+For historical evidence, the old repository's `HANDOFF-FCKFACE.md`, `RESEARCH.md`, and `MODEL-SOURCES.md` identify the exact experiments. Its local-only, no-UI scope is superseded. Current architecture and release decisions are in this repository's REQUIREMENTS.md.

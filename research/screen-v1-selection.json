@@ -1,0 +1,14 @@
+{
+  "screen": "screen-v1",
+  "split": "development",
+  "selection_rule": "first eight lexically sorted development identity IDs, before scores",
+  "identities": ["frll-001", "frll-003", "frll-004", "frll-007", "frll-011", "frll-013", "frll-018", "frll-019"],
+  "source_view": "neutral_front",
+  "reference_views": ["neutral_front", "smiling_front", "neutral_left_3quarter", "neutral_right_3quarter"],
+  "model": "SFace native OpenCV with YuNet fresh detection",
+  "seeds": [0, 1],
+  "target_face_rms": [4, 8],
+  "max_carrier_amplitude": 64,
+  "processing_conditions": ["export", "jpeg85_420", "jpeg75_420", "resize960", "half_restore", "crop90", "blur"],
+  "candidate_methods": ["uniform_dots", "global_multiscale", "face_relative_multiscale", "region_joint", "region_eyes", "region_cheeks", "region_nose", "region_lower", "graphic_halftone", "ordinary_halftone", "uniform_smooth"]
+}
